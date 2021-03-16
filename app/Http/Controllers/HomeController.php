@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Mews\Purifier\Facades\Purifier;
+use App\Http\Requests\PostTestRequest;
 
 class HomeController extends Controller
 {
@@ -27,19 +29,19 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function post_test(Request $request)
+    public function post_test(PostTestRequest $request)
     {
-        // $request->validate([
-        //     'name' => 'required',
-        // ]);
-
         $user = auth()->user();
-        $user->fill($request->all()); // ! Update all the things
+        // $user->fill($request->all()); // ! Update all the things
 
-        // $user->fill($request->only('name'));
-        // $user->fill([
-        //     'name' => $request->name
-        // ]);
+        // $user->fill($request->only([
+        //     'name',
+        //     'role',
+        // ]));
+
+        $user->fill([
+            'name' => clean($request->name),
+        ]);
 
         $user->save();
 

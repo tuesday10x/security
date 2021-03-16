@@ -53,9 +53,14 @@
                         <div class="from-group">
                             <label>Update Your Name</label>
                             <input name="name" class="form-control" value="{{ auth()->user()->name }}">
+                            @error('name')
+                                <div class="invalid-feedback" role="alert">{{ $message }}</div>
+                            @enderror
                         </div>
                         <input type="submit" class="btn btn-primary">
                     </form>
+
+                    {!! auth()->user()->name !!}
 
                     {{-- Double Curlys:
                     {{ App\Models\Setting::where('key', 'test')->first()->value }} --}}
